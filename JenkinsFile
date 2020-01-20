@@ -1,3 +1,5 @@
+def version
+
 pipeline {
     agent {
         label "jenkins-slave-argo-qmake"
@@ -7,7 +9,10 @@ pipeline {
     }
     parameters {
         gitParameter branchFilter: 'origin/(.*)', type: 'PT_BRANCH', selectedValue: 'DEFAULT',
-                name: 'BRANCH', defaultValue: 'develop', useRepository: '.*Fbow.git'
+                name: 'BRANCH', defaultValue: 'develop', useRepository: '.*fbow.git'
+        booleanParam(name: 'RELEASE',
+            defaultValue: false,
+            description: 'Create a Release')                
     }
     stages {
 
@@ -16,17 +21,6 @@ pipeline {
                 sh "git checkout ${BRANCH}"
             }
         }
-
-        stage("Get Binaries") {
-            steps {
-                script {
-                     BRANCH = BRANCH.replace('/','_')
-                }
-                withCredentials([usernamePassword(credentialsId: 'bc6e150e-ede8-4e35-8af4-0f037edee8ac', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                     getBinaries(BRANCH,USERNAME,PASSWORD)
-                }
-            }
-        }      
 
         stage("Get Third Parties") {
              steps {
@@ -39,18 +33,39 @@ pipeline {
                 withEnv(['REMAKEN_RULES_ROOT=/home/jenkins/.remaken/rules/']) {
                     sh "qmake fbow.pro"
                     sh "make"
+                    sh "make install"
                 }
             }
         }
 
-        stage("Share Binaries") {
+        stage("Build Debug") {
+            when {
+                expression { params.RELEASE == true }
+            }              
+            steps {
+                withEnv(['REMAKEN_RULES_ROOT=/home/jenkins/.remaken/rules/']) {
+                    sh "qmake fbow.pro CONFIG+=debug"
+                    sh "make"
+                    sh "make install"
+                }
+            }
+        }        
+
+        stage("Release") {
+            when {
+                expression { params.RELEASE == true }
+            }            
             steps {
                 script {
-                     sh "make install"
-                     BRANCH = BRANCH.replace('/','_')
+                    version = sh (
+                        script: "cat *.pro  | grep VERSION | head -1 | cut -d '=' -f 2",
+                        returnStdout: true
+                    )
+                    version = version.replace("\n","")
                 }
-                withCredentials([usernamePassword(credentialsId: 'bc6e150e-ede8-4e35-8af4-0f037edee8ac', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                     shareBinaries(BRANCH,USERNAME,PASSWORD)
+                prepareRelease("thirdParties","linux-gcc","fbowSolAR")
+                withCredentials([string(credentialsId: 'github-token', variable: 'token')]) {
+                    release("fbow","fbowSolAR/${version}/linux","${WORKSPACE}/artifactory/x86_64_shared_release/fbowSolAR_${version}_x86_64_shared_release.zip ${WORKSPACE}/artifactory/x86_64_shared_debug/fbowSolAR_${version}_x86_64_shared_debug.zip",token);
                 }
             }
         }        
