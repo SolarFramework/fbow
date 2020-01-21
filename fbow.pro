@@ -29,7 +29,7 @@ CONFIG(release,debug|release) {
 DEPENDENCIESCONFIG = shared recurse
 
 #NOTE : CONFIG as staticlib or sharedlib, DEPENDENCIESCONFIG as staticlib or sharedlib, QMAKE_TARGET.arch and PROJECTDEPLOYDIR MUST BE DEFINED BEFORE templatelibconfig.pri inclusion
-include (../builddefs/qmake/templatelibconfig.pri)
+include ($$shell_quote($$shell_path($$(REMAKEN_RULES_ROOT)/qmake/templatelibconfig.pri)))  # Shell_quote & shell_path required for visual on windows
 
 DEFINES += NOMINMAX
 
