@@ -65,10 +65,11 @@ pipeline {
                 }
                 prepareRelease("thirdParties","linux-gcc","fbowSolAR")
                 withCredentials([string(credentialsId: 'github-token', variable: 'token')]) {
-                    release("fbow","fbowSolAR/${version}/linux","${WORKSPACE}/artifactory/x86_64_shared_release/fbowSolAR_${version}_x86_64_shared_release.zip ${WORKSPACE}/artifactory/x86_64_shared_debug/fbowSolAR_${version}_x86_64_shared_debug.zip",token);
+                    release("binaries","fbowSolAR/${version}/linux","${WORKSPACE}/artifactory/x86_64_shared_release/fbowSolAR_${version}_x86_64_shared_release.zip ${WORKSPACE}/artifactory/x86_64_shared_debug/fbowSolAR_${version}_x86_64_shared_debug.zip",token);
                 }
             }
         }        
     }
 
 }
+DUONG Nam Duong
