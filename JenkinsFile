@@ -14,13 +14,8 @@ pipeline {
             defaultValue: false,
             description: 'Create a Release')                
     }
+    triggers { pollSCM('*/10 * * * *') }     
     stages {
-
-        stage("Checkout"){
-            steps {
-                sh "git checkout ${BRANCH}"
-            }
-        }
 
         stage("Get Third Parties") {
              steps {
