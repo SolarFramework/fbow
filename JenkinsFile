@@ -58,7 +58,7 @@ pipeline {
                 }
                 prepareRelease("thirdParties","linux-gcc","fbowSolAR")
                 withCredentials([string(credentialsId: 'github-token', variable: 'token')]) {
-                    release("binaries","fbowSolAR/${version}/linux","${WORKSPACE}/artifactory/x86_64_shared_release/fbowSolAR_${version}_x86_64_shared_release.zip ${WORKSPACE}/artifactory/x86_64_shared_debug/fbowSolAR_${version}_x86_64_shared_debug.zip",token);
+                    release("binaries","fbowSolAR/${version}/linux","fbowSolAR Version ${version} for Linux","${WORKSPACE}/artifactory/x86_64_shared_release/fbowSolAR_${version}_x86_64_shared_release.zip ${WORKSPACE}/artifactory/x86_64_shared_debug/fbowSolAR_${version}_x86_64_shared_debug.zip",token);
                 }
             }
         }        
