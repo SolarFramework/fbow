@@ -9,12 +9,13 @@ CONFIG -= qt
 INSTALLSUBDIR = thirdParties
 TARGET = fbowSolAR
 FRAMEWORK = $$TARGET
-VERSION=0.0.1
+VERSION=0.0.2
 
 DEFINES += MYVERSION=$${VERSION}
 DEFINES += TEMPLATE_LIBRARY
 CONFIG += c++1z
 
+include(findremakenrules.pri)
 
 CONFIG(debug,debug|release) {
     DEFINES += _DEBUG=1
@@ -26,10 +27,13 @@ CONFIG(release,debug|release) {
     DEFINES += NDEBUG=1
 }
 
-DEPENDENCIESCONFIG = shared recurse
+DEPENDENCIESCONFIG = shared recursive install_recurse
+
+## Configuration for Visual Studio to install binaries and dependencies. Work also for QT Creator by replacing QMAKE_INSTALL
+PROJECTCONFIG = QTVS
 
 #NOTE : CONFIG as staticlib or sharedlib, DEPENDENCIESCONFIG as staticlib or sharedlib, QMAKE_TARGET.arch and PROJECTDEPLOYDIR MUST BE DEFINED BEFORE templatelibconfig.pri inclusion
-include ($$shell_quote($$shell_path($$(REMAKEN_RULES_ROOT)/qmake/templatelibconfig.pri)))  # Shell_quote & shell_path required for visual on windows
+include ($$shell_quote($$shell_path($${QMAKE_REMAKEN_RULES_ROOT}/templatelibconfig.pri)))  # Shell_quote & shell_path required for visual on windows
 
 DEFINES += NOMINMAX
 
@@ -77,3 +81,12 @@ header.path  = $${PROJECTDEPLOYDIR}/interfaces/
 header.files  = $$files($${PWD}/src/*.h*)
 
 INSTALLS += header
+
+DISTFILES += \
+    packagedependencies.txt \
+    packagedependencies-linux.txt \
+    packagedependencies-win.txt \
+    packagedependencies-mac.txt
+
+#NOTE : Must be placed at the end of the .pro
+include ($$shell_quote($$shell_path($${QMAKE_REMAKEN_RULES_ROOT}/remaken_install_target.pri)))) # Shell_quote & shell_path required for visual on windows
