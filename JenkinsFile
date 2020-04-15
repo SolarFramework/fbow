@@ -17,9 +17,19 @@ pipeline {
 
         stage("Get Third Parties") {
              steps {
-                 getThirdParties('1.0.0')
+                 script {
+                     BRANCH = BRANCH_NAME.replace('/','_')
+                     version = sh (
+                        script: "cat *.pro  | grep VERSION | head -1 | cut -d '=' -f 2",
+                        returnStdout: true
+                     )
+                     version = version.replaceAll("[\r|\n]","")
+                 }
+                 withCredentials([string(credentialsId: 'artifactoryApiKey', variable: 'apiKey')]) {
+                    installRemaken(params.RELEASE,BRANCH,apiKey)
+                 }
              }
-        }
+        }  
 
         stage("Build") {
             steps {
@@ -44,19 +54,19 @@ pipeline {
             }
         }        
 
+        stage("Generate artifacts") {
+            steps {
+                script {
+                     prepareRelease("thirdParties","linux-gcc","fbowSolAR")
+                }
+            }
+        }  
+
         stage("Release") {
             when {
                 expression { params.RELEASE == true }
             }            
             steps {
-                script {
-                    version = sh (
-                        script: "cat *.pro  | grep VERSION | head -1 | cut -d '=' -f 2",
-                        returnStdout: true
-                    )
-                    version = version.replace("\n","")
-                }
-                prepareRelease("thirdParties","linux-gcc","fbowSolAR")
                 withCredentials([string(credentialsId: 'github-token', variable: 'token')]) {
                     release("binaries","fbowSolAR/${version}/linux","fbowSolAR Version ${version} for Linux","${WORKSPACE}/artifactory/x86_64_shared_release/fbowSolAR_${version}_x86_64_shared_release.zip ${WORKSPACE}/artifactory/x86_64_shared_debug/fbowSolAR_${version}_x86_64_shared_debug.zip",token);
                 }
