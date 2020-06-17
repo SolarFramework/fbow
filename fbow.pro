@@ -51,7 +51,7 @@ HEADERS += \
     src/fbow_exports.h \
     src/vocabulary_creator.h
 
-unix {
+unix:!android {
 #
 #   if buidling with clang
 #	    QMAKE_CXX = clang++
@@ -74,6 +74,12 @@ win32 {
     QMAKE_COMPILER_DEFINES += _WIN64
     QMAKE_CXXFLAGS += -wd4250 -wd4251 -wd4244 -wd4275
 }
+
+android {
+    QMAKE_LFLAGS += -nostdlib++
+    ANDROID_ABIS="arm64-v8a"
+}
+
 QMAKE_CXXFLAGS += -mavx -mmmx -msse -msse2 -msse3
 DEFINES += USE_AVX USE_SSE USE_SSE2 USE_SSE3 USE_MMX
 
