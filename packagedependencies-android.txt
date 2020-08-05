@@ -1,1 +1,2 @@
+boost|1.71.0|boost|thirdParties@github|https://github.com/SolarFramework/binaries/releases/download
 opencv|4.1.1|opencv|thirdParties@github|https://github.com/SolarFramework/binaries/releases/download
