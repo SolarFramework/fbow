@@ -1,2 +1,1 @@
 eigen|3.3.5|eigen|thirdParties@github|https://github.com/SolarFramework/binaries/releases/download
-boost#stable|1.71.0|boost|conan|conan-center|default|zlib=False#bzip2=False
