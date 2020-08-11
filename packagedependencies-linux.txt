@@ -1,3 +1,4 @@
 boost#stable|1.71.0|boost|conan|conan-center|default|zlib=False#bzip2=False
 libgtk-3-dev|3.22.30|gtk+-3.0|apt-get@system|apt-get
-opencv|4.1.1|opencv|conan|conan-center|default|gtk=3
+opencv|4.1.1|opencv|conan|conan-community|default|gtk=3
+

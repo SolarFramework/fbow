@@ -1,2 +1,2 @@
 boost#stable|1.71.0|boost|conan|conan-center|default|zlib=False#bzip2=False
-opencv|4.1.1|opencv|conan|conan-center|default
+opencv|4.1.1|opencv|conan|conan-community|default
