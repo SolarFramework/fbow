@@ -10,6 +10,11 @@
 #include <immintrin.h>
 #endif
 #include "cpu.h"
+#include <boost/serialization/map.hpp>
+#include <boost/serialization/set.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/base_object.hpp>
 namespace fbow{
 
 //float initialized to zero.
@@ -18,6 +23,13 @@ struct FBOW_API _float{
     inline float operator=(float &f){var=f;return var;}
     inline operator float&() {return var;}
     inline operator float() const{return var;}
+private:
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & var;
+    }
 };
 
 /**Bag of words
@@ -31,7 +43,13 @@ struct FBOW_API fBow:std::map<uint32_t,_float>{
     uint64_t hash()const;
     //returns the similitude score between to image descriptors using L2 norm
     static double score(const fBow &v1, const fBow &v2);
-
+private:
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & boost::serialization::base_object<std::map<uint32_t, _float>>(*this);
+    }
 };
 
 
@@ -46,7 +64,13 @@ struct FBOW_API fBow2:std::map<uint32_t,std::vector<uint32_t>> {
     //returns a hash identifying this
     uint64_t hash()const;
 
-
+private:
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & boost::serialization::base_object<std::map<uint32_t, std::vector<uint32_t>>>(*this);
+    }
 };
 
 /**Main class to represent a vocabulary of visual words

@@ -1,2 +1,1 @@
-opencv|3.4.3|opencv|conan|conan-center
 eigen|3.3.5|eigen|thirdParties@github|https://github.com/SolarFramework/binaries/releases/download
