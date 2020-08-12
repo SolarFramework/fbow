@@ -1,2 +1,2 @@
 boost#stable|1.71.0|boost|conan|conan-center|default|zlib=False#bzip2=False
-opencv|4.1.0|opencv|conan|conan-community|default|eigen=False#openexr=False#libtiff:jbig=False#libtiff:lzma=False#protobuf:shared=True
+opencv|4.4.0|opencv|conan-solar@conan|conan-solar
