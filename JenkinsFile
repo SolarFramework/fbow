@@ -1,0 +1,4 @@
+SolArModulePipeline {
+    moduleName="fbowSolAR"
+    dirName="thirdParties"
+}
