@@ -1,1 +1,1 @@
-opencv|4.1.0|opencv|conan|conan-community|default|eigen=False#openexr=False#libtiff:jbig=False#libtiff:lzma=False#protobuf:shared=True
+opencv|4.4.0|opencv|conan-solar@conan|conan-solar

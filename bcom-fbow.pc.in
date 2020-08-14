@@ -3,9 +3,9 @@ prefix=/usr/local
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/interfaces
-Name: SolARFramework
+Name: fbowSolAR
 Description:
-Version: 0.6.0
+Version: 0.0.3
 Requires:
 Libs: -L${libdir} -l${libname}
 Libs.private: ${libdir}/${pfx}${libname}.${lext}
