@@ -93,6 +93,7 @@ DISTFILES += \
     packagedependencies-linux.txt \
     packagedependencies-win.txt \
     packagedependencies-mac.txt \
+    packagedependencies-android.txt \
     packageignoreinstall.txt
 
 #NOTE : Must be placed at the end of the .pro
