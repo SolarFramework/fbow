@@ -1,4 +1,5 @@
 SolArModulePipeline {
     moduleName="fbowSolAR"
     dirName="thirdParties"
+	android=true
 }
