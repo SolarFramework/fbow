@@ -52,6 +52,7 @@ HEADERS += \
     src/vocabulary_creator.h
 
 unix:!android {
+    QMAKE_CXXFLAGS += -Wignored-qualifiers
 #
 #   if buidling with clang
 #	    QMAKE_CXX = clang++
@@ -76,7 +77,6 @@ win32 {
 }
 
 android {
-    QMAKE_LFLAGS += -nostdlib++
     ANDROID_ABIS="arm64-v8a"
 }
 
