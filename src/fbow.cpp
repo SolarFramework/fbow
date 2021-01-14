@@ -321,7 +321,7 @@ uint64_t Vocabulary::hash()const{
     return seed;
 }
 void fBow::toStream(std::ostream &str) const   {
-    uint32_t _size=size();
+    uint32_t _size=(uint32_t)size();
     str.write((char*)&_size,sizeof(_size));
     for(const auto & e:*this)
         str.write((char*)&e,sizeof(e));
@@ -338,12 +338,12 @@ void fBow::fromStream(std::istream &str)    {
 }
 
 void fBow2::toStream(std::ostream &str) const   {
-    uint32_t _size=size();
+    uint32_t _size=(uint32_t)size();
     str.write((char*)&_size,sizeof(_size));
     for(const auto &e:*this){
         str.write((char*)&e.first,sizeof(e.first));
         //now the vector
-        _size=e.second.size();
+        _size=(uint32_t)e.second.size();
         str.write((char*)&_size,sizeof(_size));
         str.write((char*)&e.second[0],sizeof(e.second[0])*e.second.size());
     }

@@ -9,7 +9,7 @@ CONFIG -= qt
 INSTALLSUBDIR = thirdParties
 TARGET = fbowSolAR
 FRAMEWORK = $$TARGET
-VERSION=0.0.3
+VERSION=0.0.4
 
 DEFINES += MYVERSION=$${VERSION}
 DEFINES += TEMPLATE_LIBRARY
@@ -27,7 +27,7 @@ CONFIG(release,debug|release) {
     DEFINES += NDEBUG=1
 }
 
-DEPENDENCIESCONFIG = shared recursive install_recurse
+DEPENDENCIESCONFIG = shared recursive install
 
 ## Configuration for Visual Studio to install binaries and dependencies. Work also for QT Creator by replacing QMAKE_INSTALL
 PROJECTCONFIG = QTVS
@@ -52,6 +52,7 @@ HEADERS += \
     src/vocabulary_creator.h
 
 unix:!android {
+    QMAKE_CXXFLAGS += -Wignored-qualifiers
 #
 #   if buidling with clang
 #	    QMAKE_CXX = clang++
@@ -76,7 +77,6 @@ win32 {
 }
 
 android {
-    QMAKE_LFLAGS += -nostdlib++
     ANDROID_ABIS="arm64-v8a"
 }
 
@@ -92,7 +92,9 @@ DISTFILES += \
     packagedependencies.txt \
     packagedependencies-linux.txt \
     packagedependencies-win.txt \
-    packagedependencies-mac.txt
+    packagedependencies-mac.txt \
+    packagedependencies-android.txt \
+    packageignoreinstall.txt
 
 #NOTE : Must be placed at the end of the .pro
 include ($$shell_quote($$shell_path($${QMAKE_REMAKEN_RULES_ROOT}/remaken_install_target.pri)))) # Shell_quote & shell_path required for visual on windows

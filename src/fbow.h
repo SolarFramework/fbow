@@ -26,7 +26,7 @@ struct FBOW_API _float{
 private:
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive &ar, const unsigned int version)
+    void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
     {
         ar & var;
     }
@@ -46,7 +46,7 @@ struct FBOW_API fBow:std::map<uint32_t,_float>{
 private:
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive &ar, const unsigned int version)
+    void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
     {
         ar & boost::serialization::base_object<std::map<uint32_t, _float>>(*this);
     }
@@ -67,7 +67,7 @@ struct FBOW_API fBow2:std::map<uint32_t,std::vector<uint32_t>> {
 private:
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive &ar, const unsigned int version)
+    void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
     {
         ar & boost::serialization::base_object<std::map<uint32_t, std::vector<uint32_t>>>(*this);
     }
@@ -199,7 +199,7 @@ private:
         inline  void setN(uint16_t n){ *((uint16_t*)(_blockstart))=n;}
 
         inline bool isLeaf()const{return *((uint16_t*)(_blockstart)+1);}
-        inline void setLeaf(bool v)const{*((uint16_t*)(_blockstart)+1)=1;}
+        inline void setLeaf([[maybe_unused]] bool v)const{*((uint16_t*)(_blockstart)+1)=1;}
 
         inline void setParentId(uint32_t pid){*(((uint32_t*)(_blockstart))+1)=pid;}
         inline uint32_t  getParentId(){ return *(((uint32_t*)(_blockstart))+1);}
@@ -353,7 +353,7 @@ private:
      struct  L1_x32:public Lx<uint32_t,uint32_t,8>{
          inline uint32_t computeDist(uint32_t *feat_ptr){
              uint32_t result = 0;
-             for(int i = 0; i < _nwords; ++i ) result +=  std::bitset<32>(feat_ptr[i] ^ feature[i]).count();
+             for(int i = 0; i < _nwords; ++i ) result +=  static_cast<uint32_t>(std::bitset<32>(feat_ptr[i] ^ feature[i]).count());
              return result;
          }
 

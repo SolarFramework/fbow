@@ -1,1 +1,2 @@
-eigen|3.3.5|eigen|thirdParties@github|https://github.com/SolarFramework/binaries/releases/download
+eigen|3.3.7|eigen|conan-solar@conan|conan-solar
+boost|1.74.0|boost|conan-solar@conan|conan-solar|default|zlib=False#bzip2=False
