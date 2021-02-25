@@ -1,2 +1,2 @@
 boost|1.74.0|boost|conan-solar@conan|conan-solar|default|zlib=False#bzip2=False#without_stacktrace=True
-opencv|4.4.0|opencv|conan-solar@conan|conan-solar|default|shared=True#gapi=False#tiff=False#protobuf=False#glog=False#gflags=False
+opencv|4.4.0|opencv|conan-solar@conan|conan-solar|default|gapi=False#tiff=False
