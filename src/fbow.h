@@ -1,8 +1,6 @@
 #ifndef _FBOW_VOCABULARY_H
 #define _FBOW_VOCABULARY_H
 
-#define NOMINMAX
-
 #include "fbow_exports.h"
 #include <iostream>
 #include <opencv2/core/core.hpp>
