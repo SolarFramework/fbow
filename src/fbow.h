@@ -1,5 +1,8 @@
 #ifndef _FBOW_VOCABULARY_H
 #define _FBOW_VOCABULARY_H
+
+#define NOMINMAX
+
 #include "fbow_exports.h"
 #include <iostream>
 #include <opencv2/core/core.hpp>
@@ -15,6 +18,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/base_object.hpp>
+
 namespace fbow{
 
 //float initialized to zero.
@@ -473,7 +477,7 @@ private:
 		using DType = typename Computer::DType;//distance type
 		using TData = typename Computer::TData;//data type
 
-		std::pair<DType, uint32_t> best_dist_idx(std::numeric_limits<uint32_t>::max(), 0);//minimum distance found
+        std::pair<DType, uint32_t> best_dist_idx(std::numeric_limits<uint32_t>::max(), 0);//minimum distance found
 		block_node_info *bn_info;
 		int nbits = ceil(log2(_params._m_k));
 
