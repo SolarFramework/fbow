@@ -475,7 +475,7 @@ private:
 		using DType = typename Computer::DType;//distance type
 		using TData = typename Computer::TData;//data type
 
-        std::pair<DType, uint32_t> best_dist_idx(std::numeric_limits<uint32_t>::max(), 0);//minimum distance found
+		std::pair<DType, uint32_t> best_dist_idx(std::numeric_limits<uint32_t>::max(), 0);//minimum distance found
 		block_node_info *bn_info;
 		int nbits = ceil(log2(_params._m_k));
 
